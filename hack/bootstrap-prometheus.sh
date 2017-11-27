@@ -6,7 +6,6 @@ if ! oc status ; then
 fi
 
 oc policy add-role-to-user admin developer -n openshift-metrics
-oc label node localhost app=prometheus
-oc label node localhost region=infra
+oc label node localhost app=prometheus region=infra
 oc project openshift-metrics
 oc policy add-role-to-user view system:anonymous -n openshift-metrics
