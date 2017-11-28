@@ -19,7 +19,7 @@ See https://github.com/openshift/openshift-ansible/blob/master/README_CONTAINER_
 
 1. Stand up OpenShift
 
-         oc cluster up --public-hostname=127.0.0.1.nip.io --routing-suffix=127.0.0.1.nip.io
+         oc cluster up --public-hostname=127.0.0.1 --routing-suffix=127.0.0.1.nip.io
 1. Login
 
          oc login -u system:admin
@@ -45,13 +45,20 @@ See https://github.com/openshift/openshift-ansible/blob/master/README_CONTAINER_
 1. Add developer user to openshift-metrics project
 
         oc policy add-role-to-user admin developer -n openshift-metrics
-1. View prometheus service at https://prometheus-openshift-metrics.127.0.0.1.nip.io/graph
+1. Deploy node exporter template
 
+        curl https://raw.githubusercontent.com/openshift/origin/master/examples/prometheus/node-exporter.yaml | oc create -f - -n kube-system
+1. Add hostaccess SCC so node exporter can get system metrics
+
+        oc adm policy add-scc-to-user -z prometheus-node-exporter -n kube-system hostaccess
+1. View prometheus service at https://prometheus-openshift-metrics.127.0.0.1.nip.io/graph
 
 ### Issues
 
 1. Cannot auth with this playbook since certs don't match subdomain. We open up prometheus auth as a workaround.
-1. If rebuilding sometimes the configuration needs to be deleted.
+
+        oc policy add-role-to-user view system:anonymous -n openshift-metrics
+1. If rebuilding sometimes the openshift configuration needs to be wiped, then redeploy from step 1.
 
         sudo rm -rf /var/lib/origin/openshift.local.config
 
