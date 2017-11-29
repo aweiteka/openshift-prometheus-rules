@@ -8,4 +8,7 @@ groups:
         severity: info
       annotations:
         summary: Incorrect CPU core
-
+    - record: instance:fd_utilization
+      expr: process_open_fds / process_max_fds
+      labels:
+        foo: bar

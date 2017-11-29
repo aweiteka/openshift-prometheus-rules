@@ -23,7 +23,7 @@
 
 ## Editing or Updating Existing Alerts files
 
-1. Edit the local rules file
+1. Edit a local rules file
 1. Update the configmap
 
         oc delete cm custom-rules
