@@ -20,13 +20,13 @@ With this deployment method all files in the rules directory are mounted into th
         oc create configmap base-rules --from-file=rules/ -n openshift-metrics
 1. Edit the prometheus configuration.
 
-	oc edit cm prometheus -n openshift-metrics
+        oc edit cm prometheus -n openshift-metrics
 1. Add the name of the rules directory
 
-	  prometheus.yml: |
-	    rule_files:
-	      - 'prometheus.rules'
-	      - 'rules/*.rules'
+        prometheus.yml: |
+          rule_files:
+            - 'prometheus.rules'
+            - 'rules/*.rules'
 1. Attach the configmap to the prometheus statefulset as a volume
 
         oc volume statefulset/prometheus --add \
@@ -46,7 +46,7 @@ With this deployment method all files in the rules directory are mounted into th
         oc create configmap base-rules --from-file=rules/ -n openshift-metrics
 1. Reload rules using the procedure below
 
-## Reloading Alerts
+## Reloading Rules
 
 NOTE: It can take over 60 seconds for changes to a configmap to appear in a pod. It is more reliable to simply delete the pod so it creates a new one with the new configmap. This has the cost of ~10s downtime but ensures you've got the updated config.
 
@@ -78,5 +78,13 @@ Working with prometheus is unique.
 
 - To enter the pod you need to specify the container you want. For example
 
-        oc rsh -c prometheus prometheus-0 -n openshift-metrics
+        $ oc rsh -n openshift-metrics -c alertmanager prometheus-0
+        sh-4.2$ ls -l /etc/prometheus/rules/
+        total 0
+        lrwxrwxrwx. 1 root root 17 Nov 30 15:48 etcd.rules -> ..data/etcd.rules
+        lrwxrwxrwx. 1 root root 17 Nov 30 15:48 kube.rules -> ..data/kube.rules
+        lrwxrwxrwx. 1 root root 20 Nov 30 15:48 logging.rules -> ..data/logging.rules
+        lrwxrwxrwx. 1 root root 29 Nov 30 15:48 openshift-master.rules -> ..data/openshift-master.rules
+        lrwxrwxrwx. 1 root root 27 Nov 30 15:48 openshift-node.rules -> ..data/openshift-node.rules
+        lrwxrwxrwx. 1 root root 15 Nov 30 15:48 os.rules -> ..data/os.rules
 
