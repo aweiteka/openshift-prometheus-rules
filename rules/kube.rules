@@ -2,10 +2,12 @@ groups:
 - name: kube-rules
   interval: 30s # defaults to global interval
   rules:
-    - alert: VersionCheck
-      expr: openshift_build_info{job="kubernetes-apiservers"} == 1
+    - alert: InstanceDown
+      expr: up == 0
+      for: 5m
       labels:
         severity: page
-      annotations:
-        summary: Wrong version
 
+      annotations:
+        summary: "Instance {{$labels.instance}} down"
+        description: "{{$labels.instance}} of job {{$labels.job}} has been down for more than 5 minutes."

@@ -1,0 +1,14 @@
+groups:
+- name: os-rules
+  interval: 30s # defaults to global interval
+  rules:
+    - alert: CPUCoreCheck
+      expr: machine_cpu_cores != 4
+      labels:
+        severity: info
+      annotations:
+        summary: Incorrect CPU core
+    - record: instance:fd_utilization
+      expr: process_open_fds / process_max_fds
+      labels:
+        foo: bar
