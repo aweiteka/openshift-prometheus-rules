@@ -1,0 +1,16 @@
+# use this file as a way to reproduce metrics and try out queries
+# we can't actually test rules (syntax not supported)
+clear
+load 5m
+  etcd_server_has_leader{job="kubernetes-apiservers"}                               1
+  etcd_server_has_leader{job="kubernetes-nodes", beta_kubernetes_io_os="linux"}     1
+
+eval instant at 5m max by (job) (etcd_server_has_leader)
+  {job="kubernetes-apiservers"} 1
+  {job="kubernetes-nodes"} 1
+
+eval instant at 5m min by (job) (etcd_server_has_leader)
+  {job="kubernetes-apiservers"} 0
+  {job="kubernetes-nodes"} 0
+
+
