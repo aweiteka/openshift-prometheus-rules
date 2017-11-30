@@ -11,9 +11,9 @@ See https://github.com/openshift/openshift-ansible/blob/master/README_CONTAINER_
 1. Login
 
          oc login -u system:admin
-1. Enable scheduling (not performed with openshift-ansible?)
+1. Enable scheduling (not performed by openshift-ansible against `oc cluster up` env)
 
-        oc label node localhost region=infra app=prometheus
+        oc label node localhost region=infra
 1. Set hostname (required?)
 
         sudo hostnamectl set-hostname localhost
