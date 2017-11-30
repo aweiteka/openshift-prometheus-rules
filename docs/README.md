@@ -11,6 +11,8 @@
 
 Rules cannot be dynamically loaded into OpenShift. For now we redeploy prometheus--downtime is ~10s. NOTE: the deployment will go into **crash loop backoff** on a rule file syntax error. Therefore, a syntax check is highly recommended before redeploying edited rules files. The `promtool` maybe downloaded from the [Prometheus web site](https://prometheus.io/download/).
 
+When trying to modify routing trees this hosted [routing tree editor](https://prometheus.io/webtools/alerting/routing-tree-editor/) may be helpful.
+
 ## Loading rules files from this repo
 
 With this deployment method all files in the rules directory are mounted into the pod as a configmap.
