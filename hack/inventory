@@ -4,9 +4,9 @@ is_containerized=true
 openshift_hosted_prometheus_deploy=true
 openshift_override_hostname_check=true
 openshift_master_cluster_hostname=127.0.0.1
-openshift_master_cluster_public_hostname=127.0.0.1.nip.io
-openshift_master_default_subdomain=127.0.0.1.nip.io
-openshift_prometheus_hostname=prometheus-openshift-metrics.127.0.0.1.nip.io
+openshift_master_cluster_public_hostname=127.0.0.1.xip.io
+openshift_master_default_subdomain=127.0.0.1.xip.io
+openshift_prometheus_hostname=prometheus-openshift-metrics.127.0.0.1.xip.io
 
 [OSEv3:children]
 masters
